@@ -62,7 +62,7 @@ export default function GithubFavorites() {
                     alt={user.login}
                     className="rounded-full w-[80px] m-1"
                   />
-                  <p className="font-bold">{user.name || user.login}</p>
+                  <p className="font-bold truncate max-w-[85px]">{user.name || user.login}</p>
                   <span>/{user.login}</span>
                 </a>
               </td>

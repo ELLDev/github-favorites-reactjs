@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { api } from "../services/api";
+import { toast } from "react-toastify";
 
 interface GithubUser {
   login: string;
@@ -21,33 +22,39 @@ export default function Header({
   const [inputText, setInputText] = useState("");
 
   async function handleAddUserToFavorites(userLogin: string) {
-    let currentGithubUsers = [...githubUsers];
-    let githubUserIndex = -1;
+    if (userLogin) {
+      let currentGithubUsers = [...githubUsers];
+      let githubUserIndex = -1;
 
-    if (currentGithubUsers.length > 0) {
-      githubUserIndex = currentGithubUsers.findIndex(
-        (user) => user.login.toLowerCase() === userLogin.toLowerCase()
-      );
-    }
-
-    if (githubUserIndex < 0) {
-      try {
-        const newUser = await api
-          .get(`/users/${userLogin}`)
-          .then((response) => response.data);
-
-        currentGithubUsers = [...currentGithubUsers, newUser];
-        setGithubUsers(currentGithubUsers);
-        localStorage.setItem(
-          "GITHUB_USERS",
-          JSON.stringify(currentGithubUsers)
+      if (currentGithubUsers.length > 0) {
+        githubUserIndex = currentGithubUsers.findIndex(
+          (user) => user.login.toLowerCase() === userLogin.toLowerCase()
         );
-      } catch {
-        console.log("user not found");
       }
-    }
 
-    setInputText("");
+      if (githubUserIndex === -1) {
+        try {
+          const newUser = await api
+            .get(`/users/${userLogin}`)
+            .then((response) => response.data);
+
+          currentGithubUsers = [...currentGithubUsers, newUser];
+          setGithubUsers(currentGithubUsers);
+          localStorage.setItem(
+            "GITHUB_USERS",
+            JSON.stringify(currentGithubUsers)
+          );
+        } catch {
+          toast.error("User not found");
+        }
+      } else {
+        toast.warn("User is already in favorites", {
+          style: { color: "red" },
+        });
+      }
+
+      setInputText("");
+    }
   }
 
   return (
