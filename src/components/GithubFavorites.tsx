@@ -11,7 +11,15 @@ interface GithubUser {
 }
 
 export default function GithubFavorites() {
-  const [githubUsers, setGithubUsers] = useState<GithubUser[]>([]);
+  const [githubUsers, setGithubUsers] = useState<GithubUser[]>(() => {
+    const storageGithubUsers = localStorage.getItem("GITHUB_USERS");
+
+    if (storageGithubUsers) {
+      return JSON.parse(storageGithubUsers);
+    }
+
+    return [];
+  });
 
   const handleRemoveUser = (userLogin: string) => {
     let currentGithubUsers = [...githubUsers];
@@ -20,6 +28,7 @@ export default function GithubFavorites() {
       (user) => user.login.toLowerCase() !== userLogin.toLowerCase()
     );
 
+    localStorage.setItem("GITHUB_USERS", JSON.stringify(currentGithubUsers));
     setGithubUsers(currentGithubUsers);
   };
 

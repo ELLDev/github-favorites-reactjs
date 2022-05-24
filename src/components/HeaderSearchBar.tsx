@@ -21,7 +21,7 @@ export default function Header({
   const [inputText, setInputText] = useState("");
 
   async function handleAddUserToFavorites(userLogin: string) {
-    const currentGithubUsers = [...githubUsers];
+    let currentGithubUsers = [...githubUsers];
     let githubUserIndex = -1;
 
     if (currentGithubUsers.length > 0) {
@@ -31,12 +31,20 @@ export default function Header({
     }
 
     if (githubUserIndex < 0) {
-      await api
-        .get(`/users/${userLogin}`)
-        .then((response) =>
-          setGithubUsers([...currentGithubUsers, response.data])
-        )
-        .catch(() => console.log("user not found"));
+      try {
+        const newUser = await api
+          .get(`/users/${userLogin}`)
+          .then((response) => response.data);
+
+        currentGithubUsers = [...currentGithubUsers, newUser];
+        setGithubUsers(currentGithubUsers);
+        localStorage.setItem(
+          "GITHUB_USERS",
+          JSON.stringify(currentGithubUsers)
+        );
+      } catch {
+        console.log("user not found");
+      }
     }
 
     setInputText("");
