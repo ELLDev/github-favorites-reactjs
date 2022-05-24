@@ -1,32 +1,46 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { api } from "../services/api";
 
 interface GithubUser {
   login: string;
+  name: string;
+  avatar_url: string;
   public_repos: number;
   followers: number;
 }
 
-export default function Header() {
+interface HeaderSearchBarProps {
+  githubUsers: GithubUser[];
+  setGithubUsers: (githubUsers: GithubUser[]) => void;
+}
+
+export default function Header({
+  githubUsers,
+  setGithubUsers,
+}: HeaderSearchBarProps) {
   const [inputText, setInputText] = useState("");
-  const [githubUser, setGithubUser] = useState<GithubUser>();
 
-  const handleAddUserToFavorites = () => {
-    console.log(githubUser?.login);
-    console.log(githubUser?.public_repos);
-    console.log(githubUser?.followers);
-  };
+  async function handleAddUserToFavorites(userLogin: string) {
+    const currentGithubUsers = [...githubUsers];
+    let githubUserIndex = -1;
 
-  useEffect(() => {
-    async function getGithubUser() {
-      const githubUserData = await api
-        .get("/users/elldev")
-        .then((response) => setGithubUser(response.data));
-
-      return githubUserData;
+    if (currentGithubUsers.length > 0) {
+      githubUserIndex = currentGithubUsers.findIndex(
+        (user) => user.login.toLowerCase() === userLogin.toLowerCase()
+      );
     }
-    getGithubUser();
-  }, []);
+
+    if (githubUserIndex < 0) {
+      await api
+        .get(`/users/${userLogin}`)
+        .then((response) =>
+          setGithubUsers([...currentGithubUsers, response.data])
+        )
+        .catch(() => console.log("user not found"));
+    }
+
+    setInputText("");
+  }
 
   return (
     <>
@@ -84,10 +98,11 @@ export default function Header() {
           <input
             onChange={(event) => setInputText(event.target.value)}
             type="text"
+            value={inputText}
             className="font-Roboto bg-[color:#06181C] rounded-l-xl py-2 px-4 w-10/12 text-2xl focus:brightness-150 focus:outline-none ease-in-out transition-colors"
           />
           <button
-            onClick={handleAddUserToFavorites}
+            onClick={() => handleAddUserToFavorites(inputText)}
             type="submit"
             className="flex flex-1 bg-[color:#065E7C] rounded-r-xl w-2/12 focus:outline-none"
           >
