@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 interface GithubUser {
   login: string;
+  html_url: string;
   name: string;
   avatar_url: string;
   public_repos: number;
@@ -48,9 +49,7 @@ export default function Header({
           toast.error("User not found");
         }
       } else {
-        toast.warn("User is already in favorites", {
-          style: { color: "red" },
-        });
+        toast.warn("User is already in favorites");
       }
 
       setInputText("");
@@ -59,9 +58,9 @@ export default function Header({
 
   return (
     <>
-      <div className="mb-6 flex flex-1 justify-between items-center flex-col">
+      <div className="mb-6 flex flex-1 justify-between items-center flex-col md:mb-12 xl:flex-row xl:mb-20">
         <svg
-          className="w-10/12"
+          className="w-10/12 md:w-8/12 xl:w-2/12 xl:mr-30"
           viewBox="0 0 187 33"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -107,23 +106,25 @@ export default function Header({
         </svg>
 
         <form
-          className="flex flex-1 mt-6 w-full"
+          className="flex flex-1 mt-6 w-full md:mt-12 md:w-8/12 xl:mt-0 xl:ml-[23vw]"
           onSubmit={(event: FormEvent) => event.preventDefault()}
         >
           <input
             onChange={(event) => setInputText(event.target.value)}
             type="text"
             value={inputText}
-            className="font-Roboto bg-[color:#06181C] rounded-l-xl py-2 px-4 w-10/12 text-2xl focus:brightness-150 focus:outline-none ease-in-out transition-colors"
+            placeholder="Digite o Github username que quer favoritar"
+            className="placeholder:text-[color:#7C7C8A] placeholder:text-base placeholder:truncate font-Roboto bg-[color:#06181C] rounded-l-xl py-2 px-4 w-10/12 text-2xl focus:brightness-150 focus:outline-none ease-in-out transition-colors md:py-3 md:px-5 md:text-3xl md:placeholder:text-xl xl:text-base xl:placeholder:text-base xl:leading-4 xl:w-auto xl:rounded-lg xl:flex xl:flex-1 xl:px-4 xl:py-2"
           />
           <button
             onClick={() => handleAddUserToFavorites(inputText)}
             type="submit"
-            className="flex flex-1 bg-[color:#065E7C] rounded-r-xl w-2/12 focus:outline-none"
+            className="flex flex-1 items-center justify-center bg-[color:#065E7C] rounded-r-xl w-2/12 focus:outline-none xl:w-auto xl:rounded-lg xl:ml-2 xl:grow-0"
           >
-            <div className="flex flex-1 justify-center w-5 h-5 mt-[25%]">
+            <div className="flex flex-1 justify-center items-center w-5 h-5 md:w-7 md:h-7 lg:w-8 lg:h-8 xl:mx-8 xl:my-2 xl:w-auto">
               <svg
-                width="auto"
+                className="w-6 md:w-8 xl:w-6"
+                width="34px"
                 viewBox="0 0 23 21"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,8 +136,11 @@ export default function Header({
                   fill="white"
                 />
               </svg>
+
+              <span className="hidden font-Roboto font-bold text-sm leading-6 xl:block ml-2">
+                FAVORITAR
+              </span>
             </div>
-            <span className="hidden">FAVORITAR</span>
           </button>
         </form>
       </div>

@@ -4,6 +4,7 @@ import HeaderSearchBar from "./HeaderSearchBar";
 
 interface GithubUser {
   login: string;
+  html_url: string;
   name: string;
   avatar_url: string;
   public_repos: number;
@@ -39,13 +40,13 @@ export default function GithubFavorites() {
         setGithubUsers={setGithubUsers}
       />
 
-      <table className="border-none outline outline-[1px] rounded-md outline-[color:#4A808C] w-full table-auto">
+      <table className="border-none outline outline-[1px] rounded-md outline-[color:#4A808C] w-full table-auto xl:rounded-xl">
         <thead className="bg-[color:#092D38] rounded-tl-md">
-          <tr className="text-sm flex flex-1 justify-between">
-            <th className="py-2 w-4/12 mx-1">User</th>
-            <th className="py-2 w-3/12 truncate mx-1">Repositories</th>
-            <th className="py-2 w-3/12 truncate mx-1">Followers</th>
-            <th className="py-2 w-2/12 mx-1 mr-[6px]">Action</th>
+          <tr className="text-sm flex flex-1 justify-between md:text-2xl xl:text-xl xl:leading-relaxed xl:justify-between">
+            <th className="py-2 w-4/12 mx-1 xl:py-4 xl:ml-10 xl:text-left xl:w-[464px] xl:mr-0">Usuário</th>
+            <th className="py-2 w-3/12 truncate mx-1 xl:py-4 xl:ml-10 xl:text-left xl:w-[178px] xl:mr-0">Repositories</th>
+            <th className="py-2 w-3/12 truncate mx-1 xl:py-4 xl:ml-10 xl:text-left xl:w-[180px] xl:mr-0">Followers</th>
+            <th className="py-2 w-2/12 mx-1 mr-[6px] xl:py-4 xl:ml-10 xl:text-left xl:w-[138px] xl:mr-0">Ação</th>
           </tr>
         </thead>
 
@@ -53,27 +54,44 @@ export default function GithubFavorites() {
           {githubUsers.map((user) => (
             <tr
               key={user.login}
-              className="flex flex-1 justify-between items-center border-b-[1px] border-[color:#4A808C] even:bg-[color:#06181C] even:border-[color:#284b53]"
+              className="flex flex-1 justify-between items-center border-b-[1px] border-[color:#4A808C] even:bg-[color:#06181C] even:border-[color:#284b53] md:text-2xl xl:text-xl xl:leading-relaxed xl:font-bold"
             >
-              <td className="w-4/12 text-center flex flex-1 items-center justify-center flex-col my-1">
-                <a href="https://github.com/maykbrito" target="_blank">
+              <td className="w-4/12 text-center flex flex-1 items-center justify-center my-1 md:my-3 md:ml-3 lg:mx-8 lg:my-5 xl:mx-0 xl:my-6 xl:max-w-[504px]">
+                <a
+                  href={user.html_url}
+                  target="_blank"
+                  className="md:flex md:flex-1 md:justify-center md:items-center"
+                >
                   <img
                     src={user.avatar_url}
                     alt={user.login}
-                    className="rounded-full w-[80px] m-1"
+                    className="rounded-full w-[80px] m-1 md:w-[90px] md:m-0 lg:w-[100px] xl:w-[56px] xl:mr-4 xl:ml-10"
                   />
-                  <p className="font-bold truncate max-w-[85px]">{user.name || user.login}</p>
-                  <span>/{user.login}</span>
+                  <div className="md:flex md:flex-1 md:justify-center md:items-center md:flex-col md:text-xl xl:justify-start xl:items-start">
+                    <p className="font-bold truncate max-w-[85px] md:max-w-[100px] lg:max-w-[120px] xl:text-left">
+                      {user.name || user.login}
+                    </p>
+                    <span className="truncate max-w-[85px] md:max-w-[100px] lg:max-w-[120px] xl:font-normal">
+                      /{user.login}
+                    </span>
+                  </div>
                 </a>
               </td>
-              <td className="w-3/12 text-center">{user.public_repos}</td>
-              <td className="w-3/12 text-center">{user.followers}</td>
+              <td className="w-3/12 text-center xl:w-[218px] xl:text-left xl:pl-10">{user.public_repos}</td>
+              <td className="w-3/12 text-center xl:w-[220px] xl:text-left xl:pl-10">{user.followers}</td>
               <td
-                className="w-2/12 text-center items-center mr-1"
+                className="w-2/12 text-center items-center mr-1 xl:w-[178px] xl:mr-0 xl:text-left xl:pl-10"
                 onClick={() => handleRemoveUser(user.login)}
               >
                 <button className="mt-2">
-                  <Trash color="#F75A68" weight="bold" className="w-5 h-5" />
+                  <Trash
+                    color="#F75A68"
+                    weight="bold"
+                    className="w-5 h-5 md:w-6 md:h-6 xl:hidden"
+                  />
+                  <span className="hidden font-Roboto text-xl leading-relaxed font-bold text-[color:#F75A68] xl:block">
+                    Remover
+                  </span>
                 </button>
               </td>
             </tr>
