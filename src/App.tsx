@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <main className="m-6 md:m-12 xl:max-w-[1120px] xl:mx-auto xl:my-28">
+    <main className="m-6 md:m-12 xl:max-w-[1120px] xl:m-0">
       <GithubFavorites />
 
       <ToastContainer
