@@ -39,8 +39,7 @@ export default function GithubFavorites() {
         githubUsers={githubUsers}
         setGithubUsers={setGithubUsers}
       />
-
-      <div className="xl:overflow-y-scroll xl:overflow-x-hidden xl:max-h-[491px] 2xl:max-h-[705px] border-none outline outline-[1px] rounded-md outline-[color:#4A808C] xl:rounded-xl">
+      <main className="xl:relative xl:overflow-x-hidden xl:max-h-[491px] 2xl:max-h-[705px] border-[1px] rounded-md border-[color:#4A808C] xl:rounded-xl">
         <table className="border-none outline outline-[1px] rounded-md outline-[color:#4A808C] w-full table-auto xl:rounded-xl">
           <thead className="rounded-tl-md first:rounded-tl-xl">
             <tr className="bg-[color:#092D38] first:rounded-tl-md last:rounded-tr-md text-sm flex flex-1 justify-between md:text-2xl xl:text-xl xl:leading-relaxed xl:justify-between xl:first:rounded-tl-xl xl:last:rounded-tr-xl">
@@ -111,7 +110,7 @@ export default function GithubFavorites() {
             ))}
           </tbody>
         </table>
-      </div>
+      </main>
     </>
   );
 }
