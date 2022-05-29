@@ -106,7 +106,7 @@ export default function Header({
         </svg>
 
         <form
-          className="flex flex-1 mt-6 w-full md:mt-12 md:w-8/12 xl:mt-0 xl:ml-[23vw]"
+          className="flex flex-1 mt-6 w-full md:mt-12 md:w-8/12 xl:mt-0 xl:ml-[293px]"
           onSubmit={(event: FormEvent) => event.preventDefault()}
         >
           <input

@@ -68,12 +68,12 @@ export default function GithubFavorites() {
                   <a
                     href={user.html_url}
                     target="_blank"
-                    className="md:flex md:flex-1 md:justify-center md:items-center"
+                    className="md:flex md:flex-1 md:justify-center md:items-center group"
                   >
                     <img
                       src={user.avatar_url}
                       alt={user.login}
-                      className="rounded-full w-[80px] m-1 md:w-[90px] md:m-0 lg:w-[100px] xl:w-[56px] xl:mr-4 xl:ml-10"
+                      className="rounded-full w-[80px] m-1 md:w-[90px] md:m-0 lg:w-[100px] xl:w-[56px] xl:mr-4 xl:ml-10 xl:group-hover:scale-150 xl:transition xl:ease-in-out"
                     />
                     <div className="md:flex md:flex-1 md:justify-center md:items-center md:flex-col md:text-xl xl:justify-start xl:items-start">
                       <p className="font-bold truncate max-w-[85px] md:max-w-[100px] lg:max-w-[120px] xl:text-left">
@@ -101,7 +101,7 @@ export default function GithubFavorites() {
                       weight="bold"
                       className="w-5 h-5 md:w-6 md:h-6 xl:hidden"
                     />
-                    <span className="hidden font-Roboto text-xl leading-relaxed font-bold text-[color:#F75A68] xl:block">
+                    <span className="hidden font-Roboto text-xl leading-relaxed font-bold text-[color:#F75A68] xl:block xl:hover:underline xl:underline-offset-4">
                       Remover
                     </span>
                   </button>
